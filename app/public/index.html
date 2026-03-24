@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="pl">
+<head>
+  <meta charset="UTF-8">
+  <title>Weather Dashboard</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      text-align: center;
+      padding: 40px;
+    }
+
+    h1 {
+      margin-bottom: 30px;
+    }
+
+    .container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 15px;
+      min-width: 200px;
+      font-size: 20px;
+    }
+
+    .value {
+      font-size: 40px;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <h1>🌤️ Pogoda - Warszawa</h1>
+
+  <div class="container">
+    <div class="card">
+      🌡️ Temperatura
+      <div id="temp" class="value">--</div>
+    </div>
+
+    <div class="card">
+      💧 Wilgotność
+      <div id="humidity" class="value">--</div>
+    </div>
+  </div>
+
+  <script>
+    async function loadData() {
+      const res = await fetch("/weather/Warsaw");
+      const data = await res.json();
+
+      document.getElementById("temp").innerText = Math.round(data.temperature) + " °C";
+      document.getElementById("humidity").innerText = Math.round(data.humidity) + " %";
+    }
+
+    loadData();
+    setInterval(loadData, 5000);
+  </script>
+
+</body>
+</html>
